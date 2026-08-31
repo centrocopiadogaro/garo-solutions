@@ -249,6 +249,45 @@ footer span{color:var(--celeste)}
   .banners-grid{grid-template-columns:1fr}
   .stat{padding:16px 20px}
 }
+        /* Envío de archivos a WhatsApp */
+        .files-section {
+            padding: 90px 20px;
+            background: #120b09;
+            color: #fff;
+        }
+        .files-container { max-width: 1120px; margin: 0 auto; }
+        .files-kicker { color: #ff704d; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; font-size: .78rem; }
+        .files-heading { font-size: clamp(2rem, 4vw, 3.35rem); margin: 8px 0 12px; line-height: 1.05; }
+        .files-intro { color: #d5c2bb; max-width: 700px; margin: 0 0 32px; }
+        .files-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); gap: 24px; }
+        .files-card { background: #1c1210; border: 1px solid #4c2b21; border-radius: 16px; padding: 26px; box-shadow: 0 18px 50px rgba(0,0,0,.22); }
+        .files-badge { display: inline-block; color: #ff7956; border: 1px solid #7b3725; border-radius: 6px; padding: 5px 9px; font-size: .78rem; font-weight: 700; }
+        .files-card h3 { font-size: 1.7rem; margin: 20px 0 8px; }
+        .files-card p { color: #d5c2bb; line-height: 1.55; }
+        .file-dropzone { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 220px; margin: 24px 0 14px; padding: 24px; border: 2px dashed #82422f; border-radius: 10px; text-align: center; cursor: pointer; transition: .2s ease; }
+        .file-dropzone:hover, .file-dropzone.is-dragging { border-color: #ff704d; background: rgba(255,112,77,.08); }
+        .file-dropzone-icon { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 50%; background: #f26d4f; color: #21100b; font-size: 1.45rem; margin-bottom: 12px; }
+        .file-dropzone strong { font-size: 1.05rem; }
+        .file-dropzone small, .files-note { color: #bea99f; margin-top: 9px; line-height: 1.45; }
+        .files-card input[type="file"] { display: none; }
+        .files-title-row { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+        .files-count { background: #32211d; border-radius: 6px; padding: 6px 10px; color: #ffb19b; font-weight: 800; white-space: nowrap; }
+        .file-list { min-height: 220px; margin: 24px 0; border: 1px dashed #4c3a34; border-radius: 10px; padding: 12px; }
+        .file-empty { height: 190px; display: grid; place-content: center; text-align: center; color: #bea99f; }
+        .file-empty strong { color: #fff; margin: 10px 0 5px; }
+        .file-item { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 10px; padding: 12px 6px; border-bottom: 1px solid #3a2721; }
+        .file-item:last-child { border-bottom: 0; }
+        .file-item-icon { color: #ff7956; font-size: 1.1rem; }
+        .file-item-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+        .file-item-size { color: #bea99f; font-size: .82rem; }
+        .file-remove { border: 0; background: transparent; color: #ff9b80; font-size: 1.15rem; cursor: pointer; padding: 7px; }
+        .files-divider { border: 0; border-top: 1px solid #432b24; margin: 20px 0; }
+        .files-send { width: 100%; display: inline-flex; justify-content: center; align-items: center; gap: 9px; border: 0; border-radius: 8px; padding: 16px; background: #9d432f; color: #fff; font-weight: 800; cursor: pointer; font-size: 1rem; transition: .2s ease; }
+        .files-send:hover:not(:disabled) { background: #c25439; transform: translateY(-1px); }
+        .files-send:disabled { opacity: .45; cursor: not-allowed; }
+        .files-destination { text-align: center; color: #bea99f; font-size: .88rem; margin: 12px 0 0; }
+        .files-status { min-height: 1.4em; color: #ffb19b; text-align: center; margin: 12px 0 0; font-size: .9rem; }
+        @media (max-width: 760px) { .files-grid { grid-template-columns: 1fr; } .files-section { padding: 68px 16px; } .files-card { padding: 21px; } }
 </style>
 </head>
 <body>
@@ -471,5 +510,150 @@ footer span{color:var(--celeste)}
 <!-- WhatsApp Flotante -->
 <a class="wa-float" href="https://wa.me/524621480902" target="_blank" title="WhatsApp">💬</a>
 
+    <section class="files-section" id="enviar-archivos" aria-labelledby="files-heading">
+        <div class="files-container">
+            <span class="files-kicker">Pedidos por WhatsApp</span>
+            <h2 class="files-heading" id="files-heading">Envía tus archivos sin filas</h2>
+            <p class="files-intro">Selecciona los documentos que quieres imprimir. Se quedan solamente en tu dispositivo hasta que tú elijas compartirlos.</p>
+            <div class="files-grid">
+                <article class="files-card">
+                    <span class="files-badge">&#128206; Solo en tu dispositivo</span>
+                    <h3>Arma tu carpeta</h3>
+                    <p>PDF, imágenes, documentos y más. Puedes seleccionar hasta 10 archivos de 20 MB cada uno.</p>
+                    <label class="file-dropzone" id="file-dropzone" for="document-files">
+                        <span class="file-dropzone-icon">&#128196;</span>
+                        <strong>Seleccionar archivos</strong>
+                        <small>o arrástralos aquí</small>
+                    </label>
+                    <input id="document-files" type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.webp,.txt,.rtf">
+                    <p class="files-note">Después podrás quitar cualquier archivo antes de compartirlo.</p>
+                </article>
+                <article class="files-card">
+                    <div class="files-title-row">
+                        <div>
+                            <span class="files-kicker">Tu selección</span>
+                            <h3>Lista para enviar</h3>
+                            <p>Revisa los nombres y tamaños antes de abrir WhatsApp.</p>
+                        </div>
+                        <span class="files-count" id="files-count">0 / 10</span>
+                    </div>
+                    <div class="file-list" id="file-list" aria-live="polite">
+                        <div class="file-empty" id="file-empty">
+                            <span aria-hidden="true">&#128196;</span>
+                            <strong>Aún no hay archivos seleccionados</strong>
+                            <span>Tu selección aparecerá aquí para que puedas revisarla y quitar archivos si hace falta.</span>
+                        </div>
+                    </div>
+                    <hr class="files-divider">
+                    <button class="files-send" id="files-send" type="button" disabled>&#10148; Enviar seleccionados por WhatsApp</button>
+                    <p class="files-destination">Destino: +52 462 148 0902</p>
+                    <p class="files-status" id="files-status" role="status"></p>
+                </article>
+            </div>
+        </div>
+    </section>
+    <script>
+    (() => {
+        const input = document.getElementById('document-files');
+        const dropzone = document.getElementById('file-dropzone');
+        const list = document.getElementById('file-list');
+        const empty = document.getElementById('file-empty');
+        const count = document.getElementById('files-count');
+        const send = document.getElementById('files-send');
+        const status = document.getElementById('files-status');
+        const maxFiles = 10;
+        const maxBytes = 20 * 1024 * 1024;
+        const whatsappNumber = '524621480902';
+        let files = [];
+
+        function formatSize(bytes) {
+            return bytes < 1024 * 1024
+                ? Math.max(1, Math.round(bytes / 1024)) + ' KB'
+                : (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        function render() {
+            list.querySelectorAll('.file-item').forEach(item => item.remove());
+            empty.hidden = files.length !== 0;
+            files.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                const icon = document.createElement('span');
+                icon.className = 'file-item-icon';
+                icon.setAttribute('aria-hidden', 'true');
+                icon.innerHTML = '&#128196;';
+                const details = document.createElement('div');
+                const name = document.createElement('div');
+                name.className = 'file-item-name';
+                name.title = file.name;
+                name.textContent = file.name;
+                const size = document.createElement('div');
+                size.className = 'file-item-size';
+                size.textContent = formatSize(file.size);
+                details.append(name, size);
+                const remove = document.createElement('button');
+                remove.className = 'file-remove';
+                remove.type = 'button';
+                remove.setAttribute('aria-label', 'Quitar ' + file.name);
+                remove.innerHTML = '&times;';
+                remove.addEventListener('click', () => {
+                    files.splice(index, 1);
+                    status.textContent = '';
+                    render();
+                });
+                item.append(icon, details, remove);
+                list.appendChild(item);
+            });
+            count.textContent = files.length + ' / ' + maxFiles;
+            send.disabled = files.length === 0;
+        }
+
+        function addFiles(selected) {
+            const messages = [];
+            Array.from(selected).forEach(file => {
+                if (files.length >= maxFiles) {
+                    messages.push('Solo puedes seleccionar hasta 10 archivos.');
+                } else if (file.size > maxBytes) {
+                    messages.push(file.name + ' supera el límite de 20 MB.');
+                } else if (!files.some(existing => existing.name === file.name && existing.size === file.size && existing.lastModified === file.lastModified)) {
+                    files.push(file);
+                }
+            });
+            status.textContent = messages[0] || '';
+            input.value = '';
+            render();
+        }
+        input.addEventListener('change', event => addFiles(event.target.files));
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, event => {
+                event.preventDefault();
+                dropzone.classList.add('is-dragging');
+            });
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, event => {
+                event.preventDefault();
+                dropzone.classList.remove('is-dragging');
+            });
+        });
+        dropzone.addEventListener('drop', event => addFiles(event.dataTransfer.files));
+
+        send.addEventListener('click', async () => {
+            const text = 'Hola, quiero enviar ' + files.length + ' archivo(s) para impresión. Por favor indícame el costo y el horario de entrega.';
+            if (navigator.canShare && navigator.canShare({ files: files })) {
+                try {
+                    await navigator.share({ files: files, title: 'Archivos para impresión', text: text });
+                    status.textContent = 'Solicitud compartida.';
+                    return;
+                } catch (error) {
+                    if (error && error.name === 'AbortError') return;
+                }
+            }
+            status.textContent = 'WhatsApp se abrirá; adjunta los archivos desde el botón de clip para terminar el envío.';
+            window.open('https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+        });
+        render();
+    })();
+    </script>
 </body>
 </html>
